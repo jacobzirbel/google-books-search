@@ -32,8 +32,6 @@ const Login = ({ onLogin }) => {
       });
   };
 
-  const handleLogout = () => {};
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "username") return setUsername(value);

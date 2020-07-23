@@ -34,12 +34,19 @@ const App = () => {
     getAllBooks(user.id);
   };
 
-  const handleLogout = (params) => {};
+  const handleLogout = (params) => {
+    localStorage.clear();
+    setSavedBooks([]);
+    setUser(null);
+  };
 
   return (
     <>
       {user ? (
-        <p>Logged in as: {user.username}</p>
+        <p>
+          Logged in as: {user.username}{" "}
+          <button onClick={handleLogout}>Logout</button>
+        </p>
       ) : (
         <Login onLogin={handleLogin} onLogout={handleLogout} />
       )}
