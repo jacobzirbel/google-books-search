@@ -50,13 +50,16 @@ module.exports = {
       );
     });
   },
+  removeBookFromUser: (req, res) => {
+    const { book, userId } = req.body;
+    console.log("book", book);
+    db.Book.findOne({ googleId: book.googleId }).then((dbBook) => {
+      db.User.findByIdAndUpdate(userId, { $pull: { saved: dbBook.id } }).then(
+        (result) => {
+          console.log(result);
+          res.status(200).json({ removed: dbBook });
+        }
+      );
+    });
+  },
 };
-/*
-
-db.User.findByIdAndUpdate(userId, { $push: { saved:dbBook.id} }).then(
-					(response) => {
-						console.log(response, "response!!!!!!!!!");
-						res.json("hi");
-					}
-				);
-*/

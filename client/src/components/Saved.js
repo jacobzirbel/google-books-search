@@ -1,15 +1,25 @@
 import React, { useContext, useEffect } from "react";
 import UserContext from "../context/user-context";
+import BookCard from "./BookCard";
 import API from "../util/API";
-
-const Saved = ({ books }) => {
-  const { user, setUser } = useContext(UserContext);
+const Saved = () => {
+  console.log("render saved");
+  const { user, savedBooks, setSavedBooks } = useContext(UserContext);
   useEffect(() => {}, []);
-  console.log(books, "books");
+  const handleBookRemove = (book) => {
+    API.removeBook(book, user.id).then((response) => {
+      setSavedBooks(savedBooks.filter((e) => e.googleId !== book.googleId));
+    });
+  };
   return (
     <>
-      {books.map((book, i) => (
-        <p key={i}>{book.title}</p>
+      {savedBooks.map((book, i) => (
+        <BookCard
+          key={i}
+          saved
+          book={book}
+          handleBookRemove={handleBookRemove}
+        />
       ))}
     </>
   );

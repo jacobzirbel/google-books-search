@@ -1,3 +1,3 @@
 import React from "react";
 
-export default React.createContext({ username: "", id: "" });
+export default React.createContext({});

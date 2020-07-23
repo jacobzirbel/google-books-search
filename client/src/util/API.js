@@ -11,7 +11,10 @@ export default {
     return axios.get("/api/books/" + search);
   },
   saveBook: (book, userId) => {
-    return axios.post("api/books", { book, userId });
+    return axios.post("api/books/save", { book, userId });
+  },
+  removeBook: (book, userId) => {
+    return axios.post("api/books/remove", { book, userId });
   },
   getAllBooks: (userId) => {
     return axios.get("api/users/books/" + userId);

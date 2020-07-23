@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import UserContext from "./context/user-context";
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -10,8 +9,10 @@ import Login from "./components/Login";
 import API from "./util/API";
 
 const App = () => {
+  console.log("render app");
   const [user, setUser] = useState(null);
-  const [books, setBooks] = useState([]);
+  const [savedBooks, setSavedBooks] = useState([]);
+
   useEffect(() => {
     let localStorageUser = localStorage.getItem("user");
     if (localStorageUser) {
@@ -22,29 +23,32 @@ const App = () => {
   }, []);
 
   const getAllBooks = (userId) => {
-    console.log("getting all books..." + userId);
     API.getAllBooks(userId).then((response) => {
-      setBooks(response.data);
+      setSavedBooks(response.data);
     });
   };
+
+  const handleLogin = (user) => {
+    localStorage.setItem("user", JSON.stringify(user));
+    setUser(user);
+    getAllBooks(user.id);
+  };
+
+  const handleLogout = (params) => {};
 
   return (
     <>
       {user ? (
         <p>Logged in as: {user.username}</p>
       ) : (
-        <Login
-          onLogin={(user) => {
-            localStorage.setItem("user", JSON.stringify(user));
-            setUser(user);
-            getAllBooks(user.id);
-          }}
-        />
+        <Login onLogin={handleLogin} onLogout={handleLogout} />
       )}
-      <UserContext.Provider value={{ user, setUser }}>
+      <UserContext.Provider
+        value={{ user, setUser, savedBooks, setSavedBooks }}
+      >
         <Router>
           <Route path="/" exact component={Home} />
-          <Route path="/" render={() => <Saved books={books} />} />
+          <Route path="/" component={Saved} />
           <Route path="/" component={Search} />
         </Router>
       </UserContext.Provider>

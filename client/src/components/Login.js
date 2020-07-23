@@ -3,6 +3,7 @@ import API from "../util/API";
 import Switch from "@material-ui/core/Switch";
 
 const Login = ({ onLogin }) => {
+  console.log("render login");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -16,10 +17,10 @@ const Login = ({ onLogin }) => {
         onLogin(response.data);
       })
       .catch((error) => {
-        console.log(error.request.response);
         setErrorMsg(error.request.response);
       });
   };
+
   const handleLogin = (e) => {
     e.preventDefault();
     API.submitLogin({ username, password })
@@ -27,10 +28,12 @@ const Login = ({ onLogin }) => {
         onLogin(response.data);
       })
       .catch((error) => {
-        console.log(error.request.response);
         setErrorMsg(error.request.response);
       });
   };
+
+  const handleLogout = () => {};
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "username") return setUsername(value);
@@ -38,9 +41,11 @@ const Login = ({ onLogin }) => {
     if (name === "confirm-password") return setConfirmPassword(value);
     alert("oops");
   };
+
   const validateInput = (params) => {
     return false;
   };
+
   return (
     <div>
       <p>{isLogin ? "Login" : "Create Account"}</p>
