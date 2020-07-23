@@ -7,4 +7,10 @@ export default {
   submitCreateAccount: (createData) => {
     return axios.post("/api/users", createData);
   },
+  queryGoogleBooks: (search) => {
+    return axios.get("/api/books/" + search);
+  },
+  saveBook: (bookId, userId) => {
+    return axios.post("api/books", { bookId, userId });
+  },
 };
