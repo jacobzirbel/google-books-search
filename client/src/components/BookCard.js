@@ -2,20 +2,12 @@ import React from "react";
 import API from "../util/API";
 
 const BookCard = (props) => {
-  const {
-    handleBookSave,
-    title,
-    authors,
-    description,
-    image,
-    link,
-    id,
-  } = props;
-
+  const { handleBookSave, book } = props;
+  const { title, authors, description, image, link } = book;
   return (
     <div>
       <p>start</p>
-      <button onClick={() => handleBookSave(id)}>saveBook</button>
+      <button onClick={() => handleBookSave(book)}>saveBook</button>
       <h4>Title: {title}</h4>
       <p>
         Authors:{" "}

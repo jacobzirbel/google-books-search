@@ -4,10 +4,10 @@ import API from "../util/API";
 import BookCard from "./BookCard";
 
 const Search = () => {
-  const userContext = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  console.log("search render");
+
   const queryGoogleBooks = (query) => {
     API.queryGoogleBooks(query).then((response) => {
       setSearchResults(response.data);
@@ -22,9 +22,13 @@ const Search = () => {
     queryGoogleBooks(searchQuery);
   };
 
-  const handleBookSave = (bookId) => {
-    API.saveBook(bookId, userContext.id);
+  const handleBookSave = (book) => {
+    API.saveBook(book, user.id).then((response) => {
+      //possible:
+      console.log(response);
+    });
   };
+
   return (
     <>
       <input value={searchQuery} onChange={handleInputChange} />
@@ -33,7 +37,11 @@ const Search = () => {
       </button>
       {searchResults
         ? searchResults.map((book) => (
-            <BookCard key={book.id} {...book} handleBookSave={handleBookSave} />
+            <BookCard
+              key={book.googleId}
+              book={book}
+              handleBookSave={handleBookSave}
+            />
           ))
         : null}
     </>

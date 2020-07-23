@@ -7,6 +7,8 @@ const BookSchema = new Schema({
   description: { type: String, required: false },
   image: { type: String, required: false },
   link: { type: String, required: false },
+  googleId: { type: String, required: true },
 });
 
 const Book = mongoose.model("Book", BookSchema);
+module.exports = Book;

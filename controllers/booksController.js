@@ -1,6 +1,5 @@
 const db = require("../models");
 const axios = require("axios");
-const { response } = require("express");
 // Defining methods for the booksController
 module.exports = {
   queryGoogleBooks: (req, res) => {
@@ -19,7 +18,7 @@ module.exports = {
               infoLink,
             } = volumeInfo;
             return {
-              id,
+              googleId: id,
               authors,
               title,
               description,
@@ -31,13 +30,33 @@ module.exports = {
       });
   },
   saveBookToUser: (req, res) => {
-    const { bookId, userId } = req.body;
-    console.log(bookId, userId);
-    db.User.findByIdAndUpdate(userId, { $push: { saved: bookId } }).then(
-      (response) => {
-        console.log(response, "response!!!!!!!!!");
-        res.json("hi");
+    const { book, userId } = req.body;
+    db.Book.findOne({ googleId: book.googleId }).then(async (dbBook) => {
+      let savedBookId;
+      if (!dbBook) {
+        try {
+          let createdBook = await db.Book.create(book);
+          savedBookId = createdBook.id;
+        } catch {
+          res.status(500).json("Unknown Error");
+        }
+      } else {
+        savedBookId = dbBook.id;
       }
-    );
+      db.User.findByIdAndUpdate(userId, { $push: { saved: savedBookId } }).then(
+        (response) => {
+          res.status(200).json("Book saved successfully");
+        }
+      );
+    });
   },
 };
+/*
+
+db.User.findByIdAndUpdate(userId, { $push: { saved:dbBook.id} }).then(
+					(response) => {
+						console.log(response, "response!!!!!!!!!");
+						res.json("hi");
+					}
+				);
+*/

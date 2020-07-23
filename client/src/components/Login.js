@@ -9,11 +9,21 @@ const Login = ({ onLogin }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [isLogin, setIsLogin] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleCreate = (e) => {
+    e.preventDefault();
+    API.submitCreateAccount({ username, password })
+      .then((response) => {
+        onLogin(response.data);
+      })
+      .catch((error) => {
+        console.log(error.request.response);
+        setErrorMsg(error.request.response);
+      });
+  };
+  const handleLogin = (e) => {
     e.preventDefault();
     API.submitLogin({ username, password })
       .then((response) => {
-        console.log(response);
         onLogin(response.data);
       })
       .catch((error) => {
@@ -45,7 +55,7 @@ const Login = ({ onLogin }) => {
           setConfirmPassword("");
         }}
       />
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={isLogin ? handleLogin : handleCreate}>
         <input
           value={username}
           name="username"

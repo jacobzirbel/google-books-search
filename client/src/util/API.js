@@ -10,7 +10,10 @@ export default {
   queryGoogleBooks: (search) => {
     return axios.get("/api/books/" + search);
   },
-  saveBook: (bookId, userId) => {
-    return axios.post("api/books", { bookId, userId });
+  saveBook: (book, userId) => {
+    return axios.post("api/books", { book, userId });
+  },
+  getAllBooks: (userId) => {
+    return axios.get("api/users/books/" + userId);
   },
 };
