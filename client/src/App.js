@@ -9,10 +9,10 @@ import Login from "./components/Login";
 import API from "./util/API";
 
 const App = () => {
-  console.log("render app");
   const [user, setUser] = useState(null);
   const [savedBooks, setSavedBooks] = useState([]);
 
+  // check for user, load saved books
   useEffect(() => {
     let localStorageUser = localStorage.getItem("user");
     if (localStorageUser) {

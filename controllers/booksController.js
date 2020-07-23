@@ -1,6 +1,6 @@
 const db = require("../models");
 const axios = require("axios");
-// Defining methods for the booksController
+
 module.exports = {
   queryGoogleBooks: (req, res) => {
     const { search } = req.params;
@@ -31,9 +31,11 @@ module.exports = {
   },
   saveBookToUser: (req, res) => {
     const { book, userId } = req.body;
+    // check if book is already saved in the database for different user
     db.Book.findOne({ googleId: book.googleId }).then(async (dbBook) => {
       let savedBookId;
       if (!dbBook) {
+        // add book to db.books if not already there
         try {
           let createdBook = await db.Book.create(book);
           savedBookId = createdBook.id;
@@ -43,6 +45,7 @@ module.exports = {
       } else {
         savedBookId = dbBook.id;
       }
+      // add book id to user
       db.User.findByIdAndUpdate(userId, { $push: { saved: savedBookId } }).then(
         (response) => {
           res.status(200).json("Book saved successfully");
@@ -52,11 +55,10 @@ module.exports = {
   },
   removeBookFromUser: (req, res) => {
     const { book, userId } = req.body;
-    console.log("book", book);
+    // get id of book, then remove from user
     db.Book.findOne({ googleId: book.googleId }).then((dbBook) => {
       db.User.findByIdAndUpdate(userId, { $pull: { saved: dbBook.id } }).then(
         (result) => {
-          console.log(result);
           res.status(200).json({ removed: dbBook });
         }
       );

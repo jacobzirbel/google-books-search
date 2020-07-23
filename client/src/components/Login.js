@@ -3,7 +3,6 @@ import API from "../util/API";
 import Switch from "@material-ui/core/Switch";
 
 const Login = ({ onLogin }) => {
-  console.log("render login");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

@@ -20,7 +20,6 @@ module.exports = {
         if (err.code == 11000) {
           res.status(400).send("Username taken");
         } else {
-          console.log("error, post user");
           res.status(500).send("Unknown Error Create");
         }
       });
@@ -33,7 +32,6 @@ module.exports = {
       }
       try {
         passwordsMatch = await bcrypt.compare(password, dbUser.password);
-        console.log(passwordsMatch, "match");
         if (passwordsMatch) {
           res.status(200).json({
             id: dbUser._id,
