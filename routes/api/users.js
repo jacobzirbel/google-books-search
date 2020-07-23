@@ -36,11 +36,13 @@ router
 router.route("/login").post((req, res) => {
   const { password, username } = req.body;
   db.User.findOne({ username }).then(async (dbUser) => {
-    if (!dbUser) res.status(400).send("Cannot find user");
+    if (!dbUser) {
+      return res.status(400).send("Cannot find user");
+    }
     try {
       passwordsMatch = await bcrypt.compare(password, dbUser.password);
       if (passwordsMatch) {
-        res.status(200).send(dbUser._id);
+        res.status(200).json({ id: dbUser._id, username });
       } else {
         res.status(400).send("Incorrect Password");
       }

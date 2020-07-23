@@ -2,31 +2,24 @@ import React, { useState } from "react";
 import API from "../util/API";
 import Switch from "@material-ui/core/Switch";
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const [isLogin, setIsLogin] = useState(false);
 
-  const handleCreate = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    API.submitCreateAccount({ username, password })
+    API.submitLogin({ username, password })
       .then((response) => {
         console.log(response);
+        onLogin(response.data);
       })
       .catch((error) => {
         console.log(error.request.response);
+        setErrorMsg(error.request.response);
       });
-  };
-  const handleLogin = (e) => {
-    e.preventDefault();
-    API.submitLogin({ username, password }).then((response) => {
-      if (response.error) {
-        console.log(response.error);
-      } else {
-        console.log(response);
-      }
-    });
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,10 +41,11 @@ const Login = () => {
         value={isLogin}
         onChange={() => {
           setIsLogin(!isLogin);
+          setErrorMsg("");
           setConfirmPassword("");
         }}
       />
-      <form onSubmit={isLogin ? handleLogin : handleCreate}>
+      <form onSubmit={handleSubmit}>
         <input
           value={username}
           name="username"
@@ -78,6 +72,7 @@ const Login = () => {
         <button type="submit" disabled={validateInput()}>
           Submit
         </button>
+        {errorMsg ? <p>{errorMsg}</p> : null}
       </form>
     </div>
   );

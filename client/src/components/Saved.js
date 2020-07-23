@@ -1,11 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import UserContext from "../context/user-context";
 
 const Saved = () => {
-  return (
-    <div>
-      <h2>saved</h2>
-    </div>
-  );
+  const userContext = useContext(UserContext);
+  return <h2>Saved {JSON.stringify(userContext)}</h2>;
 };
 
 export default Saved;
