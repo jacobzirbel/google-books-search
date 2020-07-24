@@ -1,4 +1,9 @@
 import React from "react";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import Button from "@material-ui/core/Button";
 
 const BookCard = (props) => {
   const { handleBookSave, handleBookRemove, saved, loggedIn, book } = props;
@@ -8,31 +13,58 @@ const BookCard = (props) => {
     if (saved) handleBookRemove(book);
     if (!saved) handleBookSave(book);
   };
-  return (
-    <div>
-      <p>start</p>
-      {loggedIn ? (
-        <button onClick={handleClick}>
-          {saved ? "Remove from List" : "Save to list"}
-        </button>
-      ) : null}
 
-      <h4>Title: {title || "No title found"}</h4>
-      <p>
-        Authors:{" "}
-        {authors ? (
-          authors.map((a, i) => (
-            <span key={i}>{(i === 0 ? " " : ", ") + a}</span>
-          ))
-        ) : (
-          <span>No authors found</span>
-        )}
-      </p>
-      {/* <p>description: {description}</p> */}
-      {image ? <img src={image} alt="book" /> : null}
-      <a href={link}>{link ? "Link" : "No link found"}</a>
-      <p>end</p>
-    </div>
+  const buttonIfLoggedIn = loggedIn ? (
+    <Button
+      variant="contained"
+      color="primary"
+      style={{ backgroundColor: saved && "red" }}
+      onClick={handleClick}
+    >
+      {saved ? "Remove" : "Save"}
+    </Button>
+  ) : null;
+
+  const buttonIfLink = link ? (
+    <Button variant="contained" color="primary">
+      <a href={link} style={{ color: "white" }}>
+        {link ? "View" : "No link found"}
+      </a>
+    </Button>
+  ) : null;
+  const authorsText = authors
+    ? authors
+        .map((a, i) => {
+          return (i === 0 ? " " : ", ") + a;
+        })
+        .join("")
+    : "No authors found";
+
+  return (
+    <Card
+      style={{
+        width: "100%",
+      }}
+    >
+      <CardHeader title={title || "No title found"} subheader={authorsText} />
+      <div
+        style={{
+          display: "flex",
+          flexFlow: "row nowrap",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <CardContent>
+          {image ? <img src={image} alt="book" /> : null}
+        </CardContent>
+        <CardContent>{description}</CardContent>
+        <CardActions>
+          {buttonIfLoggedIn}
+          {buttonIfLink}
+        </CardActions>
+      </div>
+    </Card>
   );
 };
 

@@ -7,6 +7,7 @@ import Search from "./components/Search";
 import Home from "./components/Home";
 import NavBar from "./components/NavBar";
 import API from "./util/API";
+import Container from "@material-ui/core/Container";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -51,9 +52,11 @@ const App = () => {
             handleLogout={handleLogout}
             loggedIn={!!user}
           />
-          <Route path="/" exact component={Home} />
-          <Route path="/saved" component={Saved} />
-          <Route path="/search" component={Search} />
+          <Container>
+            <Route path="/" exact component={Home} />
+            <Route path="/saved" component={Saved} />
+            <Route path="/search" component={Search} />
+          </Container>
         </Router>
       </UserContext.Provider>
     </>
