@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import API from "../util/API";
 import Switch from "@material-ui/core/Switch";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Dialog from "@material-ui/core/Dialog";
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin, open }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -44,50 +46,59 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div>
-      <p>{isLogin ? "Login" : "Create Account"}</p>
-      <Switch
-        defaultChecked
-        color="default"
-        inputProps={{ "aria-label": "checkbox with default color" }}
-        value={isLogin}
-        onChange={() => {
-          setIsLogin(!isLogin);
-          setErrorMsg("");
-          setConfirmPassword("");
-        }}
-      />
-      <form onSubmit={isLogin ? handleLogin : handleCreate}>
-        <input
-          value={username}
-          name="username"
-          onChange={handleInputChange}
-          type="text"
-          placeholder="username"
+    <Dialog
+      onClose={() => {}}
+      aria-labelledby="simple-dialog-title"
+      open={open}
+    >
+      <DialogTitle id="simple-dialog-title">
+        <p>{isLogin ? "Login" : "Create Account"}</p>
+        <Switch
+          defaultChecked
+          color="default"
+          inputProps={{ "aria-label": "checkbox with default color" }}
+          value={isLogin}
+          onChange={() => {
+            setIsLogin(!isLogin);
+            setErrorMsg("");
+            setConfirmPassword("");
+          }}
         />
-        <input
-          value={password}
-          name="password"
-          onChange={handleInputChange}
-          type="password"
-          placeholder="password"
-        />
-        {isLogin ? null : (
+      </DialogTitle>
+      <div>
+        <form onSubmit={isLogin ? handleLogin : handleCreate}>
           <input
-            value={confirmPassword}
-            name="confirm-password"
+            value={username}
+            name="username"
+            onChange={handleInputChange}
+            type="text"
+            placeholder="username"
+          />
+          <input
+            value={password}
+            name="password"
             onChange={handleInputChange}
             type="password"
-            placeholder="confirm-password"
+            placeholder="password"
           />
-        )}
-        <button type="submit" disabled={validateInput()}>
-          Submit
-        </button>
-        {errorMsg ? <p>{errorMsg}</p> : null}
-      </form>
-    </div>
+          {isLogin ? null : (
+            <input
+              value={confirmPassword}
+              name="confirm-password"
+              onChange={handleInputChange}
+              type="password"
+              placeholder="confirm-password"
+            />
+          )}
+          <button type="submit" disabled={validateInput()}>
+            Submit
+          </button>
+          {errorMsg ? <p>{errorMsg}</p> : null}
+        </form>
+      </div>
+    </Dialog>
   );
 };
 
 export default Login;
+/*   */

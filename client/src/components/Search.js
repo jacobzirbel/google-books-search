@@ -44,6 +44,7 @@ const Search = () => {
         searchResults.map((book) => (
           <BookCard
             key={book.googleId}
+            loggedIn={!!user}
             saved={savedBooks.some((e) => e.googleId === book.googleId)}
             book={book}
             handleBookSave={handleBookSave}

@@ -6,6 +6,7 @@ import Saved from "./components/Saved";
 import Search from "./components/Search";
 import Home from "./components/Home";
 import Login from "./components/Login";
+import NavBar from "./components/NavBar";
 import API from "./util/API";
 
 const App = () => {
@@ -42,21 +43,14 @@ const App = () => {
 
   return (
     <>
-      {user ? (
-        <p>
-          Logged in as: {user.username}{" "}
-          <button onClick={handleLogout}>Logout</button>
-        </p>
-      ) : (
-        <Login onLogin={handleLogin} onLogout={handleLogout} />
-      )}
       <UserContext.Provider
         value={{ user, setUser, savedBooks, setSavedBooks }}
       >
         <Router>
+          <NavBar />
           <Route path="/" exact component={Home} />
-          <Route path="/" component={Saved} />
-          <Route path="/" component={Search} />
+          <Route path="/saved" component={Saved} />
+          <Route path="/search" component={Search} />
         </Router>
       </UserContext.Provider>
     </>
@@ -64,3 +58,11 @@ const App = () => {
 };
 
 export default App;
+/*    {user ? (
+        <p>
+          Logged in as: {user.username}{" "}
+          <button onClick={handleLogout}>Logout</button>
+        </p>
+      ) : (
+        <Login onLogin={handleLogin} onLogout={handleLogout} />
+      )} */
