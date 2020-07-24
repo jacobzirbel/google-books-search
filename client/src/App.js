@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Saved from "./components/Saved";
 import Search from "./components/Search";
 import Home from "./components/Home";
-import Login from "./components/Login";
 import NavBar from "./components/NavBar";
 import API from "./util/API";
 
@@ -47,7 +46,11 @@ const App = () => {
         value={{ user, setUser, savedBooks, setSavedBooks }}
       >
         <Router>
-          <NavBar />
+          <NavBar
+            handleLogin={handleLogin}
+            handleLogout={handleLogout}
+            loggedIn={!!user}
+          />
           <Route path="/" exact component={Home} />
           <Route path="/saved" component={Saved} />
           <Route path="/search" component={Search} />

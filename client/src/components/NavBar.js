@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
@@ -12,7 +12,8 @@ const buttonStyles = {
   marginRight: "5px",
 };
 
-const NavBar = () => {
+const NavBar = ({ handleLogin, handleLogout, loggedIn }) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
   return (
     <div>
       <AppBar color="primary" position="sticky">
@@ -33,10 +34,26 @@ const NavBar = () => {
           >
             Saved
           </Button>
-          <Button style={buttonStyles} color="default">
-            Log in
+          <Button
+            style={{ ...buttonStyles }}
+            onClick={
+              loggedIn
+                ? handleLogout
+                : () => {
+                    setDialogOpen(true);
+                  }
+            }
+            color={loggedIn ? "secondary" : "default"}
+          >
+            {loggedIn ? "Log out" : "Log in"}
           </Button>
-          <Login open={true} />
+          <Login
+            open={dialogOpen}
+            onLogin={handleLogin}
+            handleClose={() => {
+              setDialogOpen(false);
+            }}
+          />
         </Toolbar>
       </AppBar>
       <div style={{ height: "50px" }}></div>

@@ -4,7 +4,7 @@ import Switch from "@material-ui/core/Switch";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 
-const Login = ({ onLogin, open }) => {
+const Login = ({ onLogin, open, handleClose }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -29,6 +29,7 @@ const Login = ({ onLogin, open }) => {
         onLogin(response.data);
       })
       .catch((error) => {
+        console.log(error);
         setErrorMsg(error.request.response);
       });
   };
@@ -47,7 +48,7 @@ const Login = ({ onLogin, open }) => {
 
   return (
     <Dialog
-      onClose={() => {}}
+      onClose={handleClose}
       aria-labelledby="simple-dialog-title"
       open={open}
     >
