@@ -56,7 +56,7 @@ const NavBar = ({ handleLogin, handleLogout, loggedIn }) => {
           />
         </Toolbar>
       </AppBar>
-      <div style={{ height: "50px" }}></div>
+      {/* <div style={{ height: "50px" }}></div> */}
     </div>
   );
 };

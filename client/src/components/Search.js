@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import UserContext from "../context/user-context";
 import API from "../util/API";
 import BookCard from "./BookCard";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 const Search = () => {
   const { user, savedBooks, setSavedBooks } = useContext(UserContext);
@@ -36,10 +38,23 @@ const Search = () => {
 
   return (
     <>
-      <input value={searchQuery} onChange={handleInputChange} />
-      <button onClick={handleSubmit} disabled={!searchQuery}>
+      <h1>Search for books</h1>
+      <div id="push" style={{ height: "50px" }} />
+      <TextField
+        value={searchQuery}
+        onChange={handleInputChange}
+        label="Search"
+        variant="outlined"
+      />
+      {/* <input value={searchQuery} onChange={handleInputChange} /> */}
+      <Button
+        onClick={handleSubmit}
+        disabled={!searchQuery}
+        variant="contained"
+        color="primary"
+      >
         Submit
-      </button>
+      </Button>
       {searchResults.length ? (
         searchResults.map((book) => (
           <BookCard
@@ -52,7 +67,7 @@ const Search = () => {
           />
         ))
       ) : (
-        <p>Enter a search term to start</p>
+        <p>{searchQuery ? "" : "Enter a search term to start"}</p>
       )}
     </>
   );

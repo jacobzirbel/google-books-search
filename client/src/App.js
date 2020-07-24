@@ -58,6 +58,7 @@ const App = () => {
             <Route path="/search" component={Search} />
           </Container>
         </Router>
+        <div style={{ height: "50px" }}></div>
       </UserContext.Provider>
     </>
   );

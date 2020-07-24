@@ -24,6 +24,7 @@ const Saved = () => {
   const userIsLoggedInJsx = savedBooks.length ? savedBooksJsx : noBooksSavedJsx;
   return (
     <>
+      <h1>Saved Books</h1>
       {user ? userIsLoggedInJsx : <h1>You must be logged in to save books</h1>}
     </>
   );

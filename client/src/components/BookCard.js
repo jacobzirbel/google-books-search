@@ -4,6 +4,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
 
 const BookCard = (props) => {
   const { handleBookSave, handleBookRemove, saved, loggedIn, book } = props;
@@ -14,57 +15,51 @@ const BookCard = (props) => {
     if (!saved) handleBookSave(book);
   };
 
-  const buttonIfLoggedIn = loggedIn ? (
+  const saveButtonStyle = {
+    backgroundColor: saved && "red",
+    marginLeft: "8px",
+    marginRight: "8px",
+  };
+
+  const buttonIfLoggedIn = (
     <Button
       variant="contained"
       color="primary"
-      style={{ backgroundColor: saved && "red" }}
+      style={saveButtonStyle}
       onClick={handleClick}
     >
       {saved ? "Remove" : "Save"}
     </Button>
-  ) : null;
+  );
 
-  const buttonIfLink = link ? (
+  const buttonIfLink = (
     <Button variant="contained" color="primary">
       <a href={link} style={{ color: "white" }}>
         {link ? "View" : "No link found"}
       </a>
     </Button>
-  ) : null;
+  );
+
   const authorsText = authors
-    ? authors
-        .map((a, i) => {
-          return (i === 0 ? " " : ", ") + a;
-        })
-        .join("")
+    ? authors.map((a, i) => (i === 0 ? " " : ", ") + a).join("")
     : "No authors found";
 
   return (
-    <Card
-      style={{
-        width: "100%",
-      }}
-    >
-      <CardHeader title={title || "No title found"} subheader={authorsText} />
-      <div
-        style={{
-          display: "flex",
-          flexFlow: "row nowrap",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <CardContent>
-          {image ? <img src={image} alt="book" /> : null}
-        </CardContent>
-        <CardContent>{description}</CardContent>
-        <CardActions>
-          {buttonIfLoggedIn}
-          {buttonIfLink}
-        </CardActions>
-      </div>
-    </Card>
+    <Paper style={{ marginTop: "30px" }}>
+      <Card>
+        <CardHeader title={title || "No title found"} subheader={authorsText} />
+        <div>
+          <CardContent>
+            {image ? <img src={image} alt="book" /> : null}
+          </CardContent>
+          <CardContent>{description}</CardContent>
+          <CardActions>
+            {loggedIn ? buttonIfLoggedIn : null}
+            {link ? buttonIfLink : null}
+          </CardActions>
+        </div>
+      </Card>
+    </Paper>
   );
 };
 
