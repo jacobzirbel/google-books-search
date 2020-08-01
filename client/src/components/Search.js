@@ -39,7 +39,7 @@ const Search = () => {
   return (
     <>
       <h1>Search for books</h1>
-      <div id="push" style={{ height: "50px" }} />
+      {/* <div id="push" style={{ height: "50px" }} /> */}
       <TextField
         value={searchQuery}
         onChange={handleInputChange}

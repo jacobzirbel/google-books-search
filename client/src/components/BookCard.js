@@ -54,7 +54,7 @@ const BookCard = (props) => {
           </CardContent>
           <CardContent>{description}</CardContent>
           <CardActions>
-            {loggedIn ? buttonIfLoggedIn : null}
+            {loggedIn ? buttonIfLoggedIn : <p>Login to save</p>}
             {link ? buttonIfLink : null}
           </CardActions>
         </div>
