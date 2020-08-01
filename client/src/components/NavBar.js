@@ -51,6 +51,7 @@ const NavBar = ({ handleLogin, handleLogout, loggedIn }) => {
             open={dialogOpen}
             onLogin={handleLogin}
             handleClose={() => {
+              console.log("handleclose");
               setDialogOpen(false);
             }}
           />

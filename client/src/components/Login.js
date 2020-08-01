@@ -55,10 +55,15 @@ const Login = ({ onLogin, open, handleClose }) => {
     e.preventDefault();
     API.submitCreateAccount({ username, password })
       .then((response) => {
+        handleClose();
         onLogin(response.data);
       })
       .catch((error) => {
-        setErrorMsg(error.request.response);
+        if (error.request) {
+          setErrorMsg(error.request.response);
+        } else {
+          setErrorMsg("error");
+        }
       });
   };
 
@@ -66,11 +71,15 @@ const Login = ({ onLogin, open, handleClose }) => {
     e.preventDefault();
     API.submitLogin({ username, password })
       .then((response) => {
+        handleClose();
         onLogin(response.data);
       })
       .catch((error) => {
-        console.log(error);
-        setErrorMsg(error.request.response);
+        if (error.request) {
+          setErrorMsg(error.request.response);
+        } else {
+          setErrorMsg("error");
+        }
       });
   };
 

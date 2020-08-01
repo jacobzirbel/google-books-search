@@ -30,6 +30,7 @@ const App = () => {
   };
 
   const handleLogin = (user) => {
+    if (!user) return;
     localStorage.setItem("user", JSON.stringify(user));
     setUser(user);
     getAllBooks(user.id);
