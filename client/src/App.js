@@ -12,7 +12,7 @@ import Container from "@material-ui/core/Container";
 const App = () => {
   const [user, setUser] = useState(null);
   const [savedBooks, setSavedBooks] = useState([]);
-
+  const [searchResults, setSearchResults] = useState([]);
   // check for user, load saved books
   useEffect(() => {
     let localStorageUser = localStorage.getItem("user");
@@ -44,7 +44,14 @@ const App = () => {
   return (
     <>
       <UserContext.Provider
-        value={{ user, setUser, savedBooks, setSavedBooks }}
+        value={{
+          user,
+          setUser,
+          savedBooks,
+          setSavedBooks,
+          searchResults,
+          setSearchResults,
+        }}
       >
         <Router>
           <NavBar

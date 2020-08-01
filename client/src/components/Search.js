@@ -5,10 +5,16 @@ import BookCard from "./BookCard";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
-const Search = () => {
-  const { user, savedBooks, setSavedBooks } = useContext(UserContext);
+const Search = ({}) => {
+  const {
+    user,
+    savedBooks,
+    setSavedBooks,
+    searchResults,
+    setSearchResults,
+  } = useContext(UserContext);
+
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
 
   const queryGoogleBooks = (query) => {
     API.queryGoogleBooks(query).then((response) => {
